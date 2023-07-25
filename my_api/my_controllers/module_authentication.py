@@ -9,6 +9,8 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
+from dal.user_actions import get_by_user_name
+
 # to get a string like this run:
 # openssl rand -hex 32
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
@@ -93,10 +95,7 @@ def get_password_hash(password):
 
 
 def get_user(db, username: str):
-    print(username)
-    if username in db:
-        user_dict = db[username]
-        return UserInDB(**user_dict)
+    return get_by_user_name(username)
 
 
 def authenticate_user(fake_db, username: str, password: str):
