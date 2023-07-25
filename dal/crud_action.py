@@ -31,8 +31,7 @@ async def general_get_all(query):
         print("Error occurred:", e)
         return False
     finally:
-        await connectionObject.close()
-        #TODO: awaits
+        connectionObject.close()
 
 
 async def get_row_by_condition(query, condition):
