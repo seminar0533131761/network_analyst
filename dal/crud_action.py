@@ -33,11 +33,27 @@ async def general_get_all(query):
     finally:
         connectionObject.close()
 
+
 async def get_row_by_condition(query, condition):
     try:
         with connectionObject.cursor() as cursor:
             cursor.execute(query, (condition,))
             data = cursor.fetchone()
+            connectionObject.commit()
+            return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
+    except Exception as e:
+        print("Error occurred:", e)
+        return False
+    finally:
+        connectionObject.close()
+
+
+async def general_get_multi_row_by_condition(query, condition):
+    try:
+        with connectionObject.cursor() as cursor:
+            cursor.execute(query, (condition,))
+            data = cursor.fetchall()
+            connectionObject.commit()
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
     except Exception as e:
         print("Error occurred:", e)
