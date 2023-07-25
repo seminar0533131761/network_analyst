@@ -94,17 +94,18 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-def get_user(db, username: str):
-    return get_by_user_name(username)
+async def get_user(db, username: str):
+    print("f")
+    return await get_by_user_name(username)
 
 
-def authenticate_user(fake_db, username: str, password: str):
-    user: UserInDB = get_user(fake_db, username)
+async def authenticate_user(fake_db, username: str, password: str):
+    user: UserInDB = await get_user(fake_db, username)
     print(user)
     if not user:
         return None
-    if not verify_password(password, user.hashed_password):
-        print("errohfgh")
+    print(password)
+    if not verify_password(password, user['hashed_password']):
         return None
     print(user)
     return user
