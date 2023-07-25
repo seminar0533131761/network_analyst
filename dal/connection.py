@@ -1,10 +1,17 @@
 import pymysql.cursors
 
-# Connect to the database
-CONNECTION = pymysql.connect(host='localhost',  # localisation de la base de donnees
-                             user='root',  # nom d'utilisateur
-                             password='password',  # mot de passe
-                             port=3306,  # port
-                             db='python_db',  # nom de la base de donnees
-                             charset='utf8mb4',  # encodage
-                             cursorclass=pymysql.cursors.DictCursor)  # methode de recuperation des donnees
+dbServerName = "sql6.freesqldatabase.com"
+
+dbUser = "sql6635065"
+
+dbPassword = "6laeqv8dZC"
+
+dbName = "sql6635065"
+
+charSet = "utf8mb4"
+
+cusrorType = pymysql.cursors.DictCursor
+
+connectionObject = pymysql.connect(host=dbServerName, user=dbUser, password=dbPassword,
+
+                                   db=dbName, charset=charSet, cursorclass=cusrorType)
