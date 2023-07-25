@@ -11,9 +11,7 @@ async def get_all_devices_by_client_id():
 
 
 async def get_all_networks():
-    try:
-        with connectionObject.cursor() as cursor:
-            client_id = 'your_client_id'  # Replace with the network ID you want to filter by
+
             sql_query = "SELECT * FROM network WHERE client_id = %s"
             cursor.execute(sql_query, (client_id,))
             network = cursor.fetchall()
