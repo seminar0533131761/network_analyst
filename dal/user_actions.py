@@ -3,6 +3,9 @@ import asyncio
 from connection import connectionObject
 
 
+# TODO decortor for errors and for loggings
+
+# the function returns bool result rather success or failed
 async def insert_user():
     try:
         print('success')
@@ -13,43 +16,36 @@ async def insert_user():
             email = "chani0533131761@gmail.com"
 
             values = (user_name, hashed_password, phone, email)
-            insert_res = cursor.execute(
+            cursor.execute(
                 "INSERT INTO user (user_name, hashed_password, phone, email) VALUES (%s, %s, %s, %s)", values)
-            print(insert_res)
+            connectionObject.commit()
+            return True
     except Exception as e:
         print(e)
         connectionObject.rollback()
         return False
-    else:
-        print('success')
-        connectionObject.commit()
-        return
+
     finally:
         print("got to final")
         connectionObject.close()
 
 
+# the function returns all users on success and false on failed
 async def get_all_users():
     try:
         with connectionObject.cursor() as cursor:
             sql_query = "SELECT * FROM user"
             cursor.execute(sql_query)
-            # Fetch all rows
+            # all_users is list of dict
             all_users = cursor.fetchall()
-            for user in all_users:
-                print(user)  # This will print each user's details as a dictionary
-            # return all_users
+            connectionObject.commit()
+            return all_users
 
     except Exception as e:
         print("Error occurred:", e)
         return False
-    else:
-        print('success')
-        connectionObject.commit()
-        return True
-
     finally:
         connectionObject.close()
 
 
-asyncio.run(get_all_users())
+print(asyncio.run(get_all_users()))
