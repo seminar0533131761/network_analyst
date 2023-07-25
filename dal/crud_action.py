@@ -7,8 +7,8 @@ async def general_insert(query, *args):
             values = args
             cursor.execute(
                 query, values)
-            connectionObject.commit()
-            return True
+            # connectionObject.commit()
+            return cursor.lastrowid
     except Exception as e:
         # TODO: replace with log instead
         print(e)
@@ -31,7 +31,8 @@ async def general_get_all(query):
         print("Error occurred:", e)
         return False
     finally:
-        connectionObject.close()
+        await connectionObject.close()
+        #TODO: awaits
 
 
 async def get_row_by_condition(query, condition):
