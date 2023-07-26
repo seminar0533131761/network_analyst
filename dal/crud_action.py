@@ -7,8 +7,8 @@ async def general_insert(query, *args):
             values = args
             cursor.execute(
                 query, values)
-            connectionObject.commit()
-            return True
+            # connectionObject.commit()
+            return cursor.lastrowid
     except Exception as e:
         # TODO: replace with log instead
         print(e)
