@@ -44,8 +44,8 @@ async def get_row_by_condition(query, condition):
     except Exception as e:
         print("Error occurred:", e)
         return False
-    finally:
-        connectionObject.close()
+    # finally:
+    #     connectionObject.close()
 
 
 async def general_get_multi_row_by_condition(query, condition):
@@ -58,5 +58,5 @@ async def general_get_multi_row_by_condition(query, condition):
     except Exception as e:
         print("Error occurred:", e)
         return False
-    finally:
-        connectionObject.close()
+    # finally:
+    #     connectionObject.close()

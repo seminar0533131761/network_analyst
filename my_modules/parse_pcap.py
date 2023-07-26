@@ -3,6 +3,10 @@ from io import BytesIO
 from scapy.all import *
 from scapy.layers.inet import IP, TCP, UDP, ICMP
 from scapy.layers.l2 import Ether
+from mac_vendor_lookup import MacLookup
+# fix it
+
+mac = MacLookup()
 
 
 async def handle_file(file_content):
@@ -16,7 +20,7 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
     packet_list = []
 
     # Process packets and extract information as needed
-    for my_packet in packets:
+    for my_packet in packets[:6]:
         packet_dict = {}
         if IP in my_packet:
             packet_dict["source_ip"] = my_packet[IP].src
@@ -24,6 +28,8 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
         if Ether in my_packet:
             packet_dict["source_mac"] = my_packet[Ether].src
             packet_dict["destination_mac"] = my_packet[Ether].dst
+            # here
+            packet_dict["vendor"] = await mac.lookup(packet_dict["source_mac"])
         if TCP in my_packet:
             packet_dict["protocol"] = "TCP"
         elif UDP in my_packet:
@@ -33,10 +39,11 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
         else:
             packet_dict["protocol"] = "Unknown"
         packet_list.append(packet_dict)
+        print(packet_dict)
 
     return packet_list
 
 
 async def update_db(data_lst):
-
+    # TODO: here we send to dal/cap to insert db
     pass
