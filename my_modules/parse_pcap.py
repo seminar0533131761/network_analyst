@@ -16,7 +16,7 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
     packet_list = []
 
     # Process packets and extract information as needed
-    for my_packet in packets[:6]:
+    for my_packet in packets:
         packet_dict = {}
         if IP in my_packet:
             packet_dict["source_ip"] = my_packet[IP].src
@@ -38,5 +38,5 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
 
 
 async def update_db(data_lst):
-    # TODO: Implement database update logic here
+
     pass
