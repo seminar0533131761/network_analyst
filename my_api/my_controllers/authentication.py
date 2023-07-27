@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from starlette import status
 
 from my_modules import module_authentication
-from my_modules.module_authentication import User, get_current_active_user
+from my_modules.module_authentication import User, get_current_active_user, UserInDB
 
 # from .module_authentication import *
 # from module_authentication import  Token, authenticate_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
@@ -13,7 +13,7 @@ from my_modules.module_authentication import User, get_current_active_user
 router = APIRouter()
 
 
-@router.post("/login", response_model=dict)
+@router.post("/login", response_model=object)
 async def login_for_access_token(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
     # Depends() can be problem perphaps not empty auto2
     print(form_data.username)
@@ -32,9 +32,10 @@ async def login_for_access_token(response: Response, form_data: OAuth2PasswordRe
         key="Authorization", value=f"Bearer {encoders.jsonable_encoder(access_token)}",
         httponly=True
     )
-    # it is not setting the cookie (maybe)
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/users/me", response_model=User)
+
+@router.get("/users/me", response_model=object)
 async def read_users_me(current_user: User = Depends(get_current_active_user)):
+    print(f"got current active user in the controller!!!!!!!!!!!!!!!!!!! {current_user}  type  {type(current_user)} ")
     return current_user

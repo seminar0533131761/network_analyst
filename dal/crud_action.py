@@ -1,6 +1,9 @@
+import pymysql
+
 from dal.connection import connectionObject
 
 
+# insert one row
 async def general_insert(query, *args):
     try:
         with connectionObject.cursor() as cursor:
@@ -14,6 +17,18 @@ async def general_insert(query, *args):
         print(e)
         connectionObject.rollback()
         return False
+    finally:
+        connectionObject.close()
+
+
+async def general_insert_many(query, lst_of_tuples):
+    try:
+        with connectionObject.cursor() as cursor:
+            cursor.executemany(query, lst_of_tuples)
+        connectionObject.commit()
+        print("Multiple rows inserted successfully.")
+    except pymysql.Error as e:
+        print(f"Error: {e}")
     finally:
         connectionObject.close()
 
@@ -44,8 +59,8 @@ async def get_row_by_condition(query, condition):
     except Exception as e:
         print("Error occurred:", e)
         return False
-    finally:
-        connectionObject.close()
+    # finally:
+    #     connectionObject.close()
 
 
 async def general_get_multi_row_by_condition(query, condition):
@@ -58,5 +73,5 @@ async def general_get_multi_row_by_condition(query, condition):
     except Exception as e:
         print("Error occurred:", e)
         return False
-    finally:
-        connectionObject.close()
+    # finally:
+    #     connectionObject.close()
