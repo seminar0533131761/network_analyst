@@ -1,10 +1,12 @@
-import requests
 import tkinter as tk
 from tkinter import filedialog
+
+import requests
 
 url = "http://127.0.0.1:8000/caps/upload"
 
 
+# note:  this file is not in use yet because we are using postman for uploading files
 def choose_file(url):
     file_path = filedialog.askopenfilename(initialdir="/", title="Select a File",
                                            filetypes=(("Capture Files", "*.pcap"), ("All Files", "*.*")))
@@ -40,4 +42,3 @@ choose_button.pack(pady=80, padx=80)
 
 # Run the GUI event loop
 window.mainloop()
-

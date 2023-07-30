@@ -18,6 +18,10 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
         if IP in my_packet:
             packet_dict["source_ip"] = my_packet[IP].src
             packet_dict["destination_ip"] = my_packet[IP].dst
+        else:
+            # TODO: discover their ip address in another way
+            packet_dict["source_ip"] = "unknown"
+            packet_dict["destination_ip"] = "unknown"
         if Ether in my_packet:
             packet_dict["source_mac"] = my_packet[Ether].src
             packet_dict["destination_mac"] = my_packet[Ether].dst
@@ -25,13 +29,11 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
                 packet_dict["source_vendor"] = await AsyncMacLookup().lookup(packet_dict["source_mac"])
             except Exception as err:
                 # TODO:  print ot log
-                print(err)
                 packet_dict["source_vendor"] = "unknown"
             try:
                 packet_dict["destination_vendor"] = await AsyncMacLookup().lookup(packet_dict["destination_mac"])
             except Exception as err:
                 # TODO:  print ot log
-                print(err)
                 packet_dict["destination_vendor"] = "unknown"
         if TCP in my_packet:
             packet_dict["protocol"] = "TCP"

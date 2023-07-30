@@ -16,8 +16,9 @@ router = APIRouter()
 @router.post("/login", response_model=object)
 async def login_for_access_token(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
     # Depends() can be problem perphaps not empty auto2
-    print(form_data.username)
+    print("form_data.username: ", form_data.username)
     user = await module_authentication.authenticate_user(form_data.username, form_data.password)
+    print("user: ", user)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

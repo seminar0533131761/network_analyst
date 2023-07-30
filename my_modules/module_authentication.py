@@ -58,7 +58,7 @@ class TokenData(BaseModel):
 
 class User(BaseModel):
     id: Union[str, None] = None
-    user_name: str
+    username: str
     hashed_password: str
     phone: str
     email: str
@@ -76,7 +76,9 @@ app = FastAPI()
 
 def verify_password(plain_password, hashed_password):
     # return "s" + plain_password == hashed_password
-    return pwd_context.verify(plain_password, hashed_password)
+    val = pwd_context.verify(plain_password, hashed_password)
+    return val
+    # return pwd_context.verify(plain_password, hashed_password)
 
 
 def get_password_hash(password):
@@ -86,18 +88,19 @@ def get_password_hash(password):
 
 
 async def get_user(username: str):
+    print(username)
     return await get_by_user_name(username)
 
 
 async def authenticate_user(username: str, password: str):
     user: UserInDB = await get_user(username)
-    print(user)
+    print("authenticate_user - user: ", user)
     if not user:
         return None
-    print(password)
+    print("password: ", password)
     if not verify_password(password, user['hashed_password']):
         return None
-    print(user)
+    print("verify_password success!!!!!!")
     return user
 
 
