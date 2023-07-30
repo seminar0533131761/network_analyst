@@ -41,11 +41,3 @@ choose_button.pack(pady=80, padx=80)
 # Run the GUI event loop
 window.mainloop()
 
-# if __name__ == "__main__":
-# file_path = r'C:\Users\ימין\Music\לימודים\python_ele\קבצים של הפרויקט גמר\קבצי pcap\evidence02.pcap'
-#
-# try:
-#     response_data = upload_pcap_file(url, file_path)
-#     print("Response:", response_data)
-# except requests.exceptions.RequestException as e:
-#     print("Error occurred during upload:", e)
