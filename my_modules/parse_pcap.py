@@ -29,7 +29,7 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
             packet_dict["source_mac"] = my_packet[Ether].src
             packet_dict["destination_mac"] = my_packet[Ether].dst
             # here
-            packet_dict["vendor"] = await mac.lookup(packet_dict["source_mac"])
+            # packet_dict["vendor"] = await mac.lookup(packet_dict["source_mac"])
         if TCP in my_packet:
             packet_dict["protocol"] = "TCP"
         elif UDP in my_packet:

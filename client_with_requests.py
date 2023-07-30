@@ -8,6 +8,7 @@ url = "http://127.0.0.1:8000/caps/upload"
 def choose_file(url):
     file_path = filedialog.askopenfilename(initialdir="/", title="Select a File",
                                            filetypes=(("Capture Files", "*.pcap"), ("All Files", "*.*")))
+    # change to all types file
     if file_path:
         upload_file(url, file_path)
 
