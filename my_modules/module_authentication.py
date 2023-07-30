@@ -58,7 +58,7 @@ class TokenData(BaseModel):
 
 class User(BaseModel):
     id: Union[str, None] = None
-    username: str
+    user_name: str
     hashed_password: str
     phone: str
     email: str
