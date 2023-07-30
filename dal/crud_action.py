@@ -5,12 +5,13 @@ from dal.connection import connectionObject
 
 # insert one row
 async def general_insert(query, *args):
+    print(args)
     try:
         with connectionObject.cursor() as cursor:
             values = args
             cursor.execute(
                 query, values)
-            # connectionObject.commit()
+            connectionObject.commit()
             return cursor.lastrowid
     except Exception as e:
         # TODO: replace with log instead
@@ -18,6 +19,7 @@ async def general_insert(query, *args):
         connectionObject.rollback()
         return False
     finally:
+        print("finish")
         connectionObject.close()
 
 
@@ -25,11 +27,14 @@ async def general_insert_many(query, lst_of_tuples):
     try:
         with connectionObject.cursor() as cursor:
             cursor.executemany(query, lst_of_tuples)
-        connectionObject.commit()
+        # connectionObject.commit()
         print("Multiple rows inserted successfully.")
+        return True
     except Exception as e:
         connectionObject.rollback()
         print(f"Error: {e}")
+        return False
+
     finally:
         connectionObject.close()
 
@@ -55,13 +60,13 @@ async def get_row_by_condition(query, condition):
         with connectionObject.cursor() as cursor:
             cursor.execute(query, (condition,))
             data = cursor.fetchone()
-            connectionObject.commit()
+            # connectionObject.commit()
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
     except Exception as e:
         print("Error occurred:", e)
         return False
-    # finally:
-    #     connectionObject.close()
+    finally:
+        connectionObject.close()
 
 
 async def general_get_multi_row_by_condition(query, condition):
@@ -69,10 +74,10 @@ async def general_get_multi_row_by_condition(query, condition):
         with connectionObject.cursor() as cursor:
             cursor.execute(query, (condition,))
             data = cursor.fetchall()
-            connectionObject.commit()
+            # connectionObject.commit()
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
     except Exception as e:
         print("Error occurred:", e)
         return False
-    # finally:
-    #     connectionObject.close()
+    finally:
+        connectionObject.close()
