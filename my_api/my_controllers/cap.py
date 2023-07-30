@@ -9,7 +9,6 @@ router = APIRouter()
 # only pcap files are expected otherwise many errors can be occurred
 @router.post("/upload")
 async def upload_pcap(file: UploadFile = File(...)):
-    # print(f"curren in cap upload {current_user}")
     file_content = await file.read()
     await handle_file(file_content)
     return {file.filename: "uploaded successfully"}
