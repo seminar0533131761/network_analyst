@@ -27,7 +27,8 @@ async def general_insert_many(query, lst_of_tuples):
             cursor.executemany(query, lst_of_tuples)
         connectionObject.commit()
         print("Multiple rows inserted successfully.")
-    except pymysql.Error as e:
+    except Exception as e:
+        connectionObject.rollback()
         print(f"Error: {e}")
     finally:
         connectionObject.close()
