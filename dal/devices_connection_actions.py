@@ -20,7 +20,27 @@ async def connection_insert_many(lst_of_dicts, network_id):
 
 
 async def get_connections(network_id):
-    query = "SELECT src_id, dest_id FROM connection JOIN device WHERE device.network_id = %s"
-    return await general_get_multi_row_by_condition(query, network_id)
+    device_query = "SELECT * FROM device WHERE device.network_id = %s "
+    lst_of_devices = await general_get_multi_row_by_condition(device_query, network_id)
+    connection_query = "SELECT src_id, dest_id FROM connection WHERE connection.network_id = %s "
+    lst_of_connections = await general_get_multi_row_by_condition(connection_query, network_id)
+    dict_of_connection_map = {}
+    for item in lst_of_connections:
+        if item["src_id"] in dict_of_connection_map.keys():
+            if not item["dest_id"] in dict_of_connection_map[item["src_id"]]:
+                dict_of_connection_map[item["src_id"]].append(item["dest_id"])
+        else:
+            dict_of_connection_map[item["src_id"]] = []
+            dict_of_connection_map[item["src_id"]].append(item["dest_id"])
+    return await add_vendor(dict_of_connection_map,lst_of_devices)
+
+
+async def add_vendor(dict_of_connection_map,lst_of_devices):
+    for mac in dict_of_connection_map.keys():
+        for device in lst_of_devices:
+            if device["id"] == mac:
+                dict_of_connection_map[mac].append({"device_vendor": (device["vendor"])})
+    return dict_of_connection_map
+
 # asyncio.run(general_delete_data("DELETE FROM connection"))
 # print(asyncio.run(general_get_all("SELECT * FROM connection")))
