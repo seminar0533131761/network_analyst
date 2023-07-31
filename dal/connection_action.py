@@ -14,7 +14,7 @@ from dal.connection import connectionObject
 async def extract_files(network_id):
     query = "SELECT src_id, dest_id FROM connection JOIN devices d1 WHERE d1.network_id = %s"
     return await general_get_all(query, network_id)
-#Puts the source node and TUPEL of the target nodes into the dictionary (do it in the TUPEL to avoid duplication)
+#Puts the source node and TUP of the target nodes into the dictionary (do it in the TUPEL to avoid duplication)
 async def arrangement_of_connections(network_id):
     fetched_data = await extract_files(network_id)
     mapping_dict = {}
