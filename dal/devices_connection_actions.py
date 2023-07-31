@@ -12,6 +12,7 @@ async def connection_insert(src_id, dest_id, protocol_type):
 
 async def connection_insert_many(lst_of_dicts, network_id):
     query = "insert INTO connection (src_id, dest_id ,network_id,protocol_type) VALUES (%s, %s, %s,%s) "
+    # the set is because we want to avoid duplicates rows in all fileds
     set_for_connections = set()
     for connection in lst_of_dicts:
         set_for_connections.add(
