@@ -6,8 +6,8 @@ from dal.network_action import get_devices_by_network_id
 
 async def get_all_devices_by_client_id(client_id):
     client_devices = []
-    client_network = await get_all_networks(client_id)
-    for network in client_network:
+    client_networks = await get_all_networks(client_id)
+    for network in client_networks:
         client_devices.append(await get_devices_by_network_id(network["id"]))
 
 
@@ -21,4 +21,4 @@ async def client_insert(_id, name):
     return await general_insert(query, _id, name)
 
 
-asyncio.run(client_insert("1761", "baruch"))
+# asyncio.run(client_insert("1761", "baruch"))
