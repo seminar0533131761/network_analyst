@@ -1,5 +1,3 @@
-import asyncio
-
 from dal.connection import connectionObject
 
 
@@ -69,7 +67,11 @@ async def get_row_by_condition(my_query, condition):
         with connectionObject.cursor() as cursor:
             print("query: ", my_query)
             print("condition: ", condition)
-            cursor.execute(my_query, condition)
+            # case multi conditions
+            if len(condition) > 1:
+                cursor.execute(my_query, *condition)
+            else:
+                cursor.execute(my_query, condition)
             data = cursor.fetchone()
             print("data: ", data)
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
@@ -104,7 +106,6 @@ async def general_delete_data(my_query):
         connectionObject.rollback()
         print(f"Error: {e}")
         return False
-
 
 # asyncio.run(general_delete_data("DELETE FROM device"))
 # print(asyncio.run(general_get_all("SELECT * FROM device")))

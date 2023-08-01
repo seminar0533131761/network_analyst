@@ -1,5 +1,3 @@
-import asyncio
-
 from dal.crud_action import general_insert, general_get_all, get_row_by_condition
 
 
@@ -20,6 +18,7 @@ async def get_by_user_name(user_name):
     # query = "SELECT * FROM user"
     query = "SELECT * FROM user WHERE user_name = %s"
     return await get_row_by_condition(query, user_name)
+
 
 # res = asyncio.run(insert("INSERT INTO user (user_name, hashed_password, phone, email) VALUES (%s, %s, %s, %s)",
 #                          "sari", "$2b$12$z1PzAnFm2jrOgTh9JRSaeeaSsFyqvTSOsET24aKkS0IAUStfkcu.C",
