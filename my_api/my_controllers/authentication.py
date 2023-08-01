@@ -7,7 +7,7 @@ from starlette import status
 
 from my_modules import module_authentication
 from my_modules.module_authentication import User, get_current_active_user
-from self_logging import MyLogger
+from my_modules.self_logging import MyLogger
 
 router = APIRouter()
 my_logger = MyLogger(log_level=logging.INFO)

@@ -4,7 +4,7 @@ from fastapi import APIRouter, Form, Depends
 
 from dal.client_actions import get_all_devices_by_client_id, get_all_networks_by_client_id
 from my_modules.module_authentication import User, get_current_active_user
-from self_logging import MyLogger
+from my_modules.self_logging import MyLogger
 
 router = APIRouter()
 my_logger = MyLogger(log_level=logging.INFO)

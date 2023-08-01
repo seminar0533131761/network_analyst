@@ -14,7 +14,7 @@ from my_controllers.client import router as client_router
 from my_controllers.connection import router as connection_router
 from my_controllers.network import router as network_router
 from my_controllers.user import router as user_router
-from self_logging import MyLogger
+from my_modules.self_logging import MyLogger
 
 # to make sys search from network_analyst not from my_api
 
@@ -38,8 +38,7 @@ async def catch_exceptions_middleware(request: Request, call_next):
     try:
         return await call_next(request)
     except Exception as e:
-        print(e)
-        # logger.critical("unknown error", e)
+        logger.critical("unknown error",e.args)
         return Response("can not have this data")
 
 

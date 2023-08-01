@@ -6,7 +6,7 @@ from dal.client_actions import is_client_connect_to_user
 from dal.user_actions import get_by_user_name
 from my_modules.handle_pcap import handle_file
 from my_modules.module_authentication import User, get_current_active_user
-from self_logging import MyLogger
+from my_modules.self_logging import MyLogger
 
 router = APIRouter()
 my_logger = MyLogger(log_level=logging.INFO)
