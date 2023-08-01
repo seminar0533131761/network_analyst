@@ -13,9 +13,9 @@ async def update_db(data_lst_of_dicts, network_info):
     subnet_mask = "unknown"
     client_id = network_info["client_id"]
     location = network_info["location"]
+    print()
     network_id = await network_insert(subnet_mask, client_id, location)
     if network_id:
-        print("network_id", network_id)
         is_insertion_to_devices = await device_insert_many(data_lst_of_dicts, network_id)
         if is_insertion_to_devices:
             return await connection_insert_many(data_lst_of_dicts, network_id)

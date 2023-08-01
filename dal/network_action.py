@@ -14,8 +14,13 @@ async def network_delete(query):
 
 
 async def get_devices_by_network_id(network_id):
-    query = "SELECT * FROM devices WHERE network_id = %s"
+    query = "SELECT * FROM device WHERE network_id = %s"
     return await general_get_multi_row_by_condition(query, network_id)
+
+async def get_all():
+    query = "SELECT * FROM network"
+    return await general_get_all(query)
 
 # asyncio.run(network_delete("DELETE FROM network"))
 # print(asyncio.run(general_get_all("SELECT * FROM network")))
+# asyncio.run(get_all())

@@ -82,13 +82,10 @@ def verify_password(plain_password, hashed_password):
 
 
 def get_password_hash(password):
-    # print("s" +password)
-    # return "s" + password
     return pwd_context.hash(password)
 
 
 async def get_user(username: str):
-    print(username)
     return await get_by_user_name(username)
 
 
@@ -99,6 +96,7 @@ async def authenticate_user(username: str, password: str):
         return None
     print("password: ", password)
     if not verify_password(password, user['hashed_password']):
+        print("got to verify password")
         return None
     print("verify_password success!!!!!!")
     return user

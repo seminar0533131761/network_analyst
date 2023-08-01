@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, Response, encoders
@@ -5,21 +6,21 @@ from fastapi.security import OAuth2PasswordRequestForm
 from starlette import status
 
 from my_modules import module_authentication
-from my_modules.module_authentication import User, get_current_active_user, UserInDB
-
-# from .module_authentication import *
-# from module_authentication import  Token, authenticate_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
+from my_modules.module_authentication import User, get_current_active_user
+from my_modules.self_logging import MyLogger
 
 router = APIRouter()
+my_logger = MyLogger(log_level=logging.INFO)
+logger = my_logger.get_logger()
 
 
 @router.post("/login", response_model=object)
 async def login_for_access_token(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
-    # Depends() can be problem perphaps not empty auto2
     print("form_data.username: ", form_data.username)
     user = await module_authentication.authenticate_user(form_data.username, form_data.password)
     print("user: ", user)
     if not user:
+        logger.info(f"UNAUTHORIZED user with username {form_data.username}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -38,5 +39,4 @@ async def login_for_access_token(response: Response, form_data: OAuth2PasswordRe
 
 @router.get("/users/me", response_model=object)
 async def read_users_me(current_user: User = Depends(get_current_active_user)):
-    print(f"got current active user in the controller!!!!!!!!!!!!!!!!!!! {current_user}  type  {type(current_user)} ")
     return current_user
