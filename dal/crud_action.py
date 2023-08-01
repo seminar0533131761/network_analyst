@@ -68,8 +68,9 @@ async def get_row_by_condition(my_query, condition):
             print("query: ", my_query)
             print("condition: ", condition)
             # case multi conditions
-            if len(condition) > 1:
-                cursor.execute(my_query, condition)
+            if not isinstance(condition, int):
+                if len(condition) > 1:
+                    cursor.execute(my_query, condition)
             else:
                 cursor.execute(my_query, (condition,))
             data = cursor.fetchone()
@@ -85,8 +86,9 @@ async def get_row_by_condition(my_query, condition):
 async def general_get_multi_row_by_condition(my_query, conditions):
     try:
         with connectionObject.cursor() as cursor:
-            if len(conditions) > 1:
-                cursor.execute(my_query, (*conditions,))
+            if not isinstance(conditions, int):
+                if len(conditions) > 1:
+                    cursor.execute(my_query, conditions)
             else:
                 cursor.execute(my_query, (conditions,))
             data = cursor.fetchall()

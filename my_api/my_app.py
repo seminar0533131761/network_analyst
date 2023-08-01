@@ -37,8 +37,8 @@ logger = my_logger.get_logger()
 async def catch_exceptions_middleware(request: Request, call_next):
     try:
         return await call_next(request)
-    except Exception as e:
-        logger.critical("unknown error",e.args)
+    except Exception:
+        logger.critical("unknown error")
         return Response("can not have this data")
 
 

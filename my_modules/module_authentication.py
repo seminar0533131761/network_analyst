@@ -82,8 +82,6 @@ def verify_password(plain_password, hashed_password):
 
 
 def get_password_hash(password):
-    # print("s" +password)
-    # return "s" + password
     return pwd_context.hash(password)
 
 
