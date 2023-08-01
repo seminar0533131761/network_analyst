@@ -8,7 +8,7 @@ router = APIRouter()
 async def get_all_networks(client_id: str = Form(...) , current_user: User = Depends(get_current_active_user)):
     return await get_all_networks_by_client_id(client_id)
 
-@router.get("/all_devices")
+@router.get("/all-devices")
 async def all_devices(client_id: int = Form(...), current_user: User = Depends(get_current_active_user)):
     devices = await get_all_devices_by_client_id(client_id)
     if devices:
