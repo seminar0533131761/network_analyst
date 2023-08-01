@@ -17,7 +17,6 @@ async def get_all():
 
 async def get_by_user_name(user_name):
     print("user_name: ", user_name)
-    # query = "SELECT * FROM user"
     query = "SELECT * FROM user WHERE user_name = %s"
     return await get_row_by_condition(query, user_name)
 

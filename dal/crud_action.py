@@ -69,9 +69,9 @@ async def get_row_by_condition(my_query, condition):
             print("condition: ", condition)
             # case multi conditions
             if len(condition) > 1:
-                cursor.execute(my_query, *condition)
-            else:
                 cursor.execute(my_query, condition)
+            else:
+                cursor.execute(my_query, (condition,))
             data = cursor.fetchone()
             print("data: ", data)
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist

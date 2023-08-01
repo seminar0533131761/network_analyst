@@ -38,7 +38,8 @@ async def catch_exceptions_middleware(request: Request, call_next):
     try:
         return await call_next(request)
     except Exception as e:
-        logger.critical("unknown error", e)
+        print(e)
+        # logger.critical("unknown error", e)
         return Response("can not have this data")
 
 
