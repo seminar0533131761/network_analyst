@@ -2,9 +2,12 @@ import logging
 import os
 import sys
 
+curr_path = os.path.dirname(__file__)
+root_path = os.path.join(curr_path, "..")
+sys.path.append(root_path)
+
 import uvicorn
 from fastapi import FastAPI, Response, Request
-
 from my_controllers.authentication import router as authentication_router
 from my_controllers.cap import router as cap_router
 from my_controllers.client import router as client_router
@@ -14,9 +17,7 @@ from my_controllers.user import router as user_router
 from self_logging import MyLogger
 
 # to make sys search from network_analyst not from my_api
-curr_path = os.path.dirname(__file__)
-root_path = os.path.join(curr_path, "..")
-sys.path.append(root_path)
+
 
 app = FastAPI()
 
