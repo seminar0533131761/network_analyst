@@ -11,7 +11,6 @@ async def convert_context_to_lst_of_dicts(pcap_file_content):
     pcap_file = BytesIO(pcap_file_content)
     packets = rdpcap(pcap_file)
     packet_list = []
-
     # Process packets and extract information as needed
     for my_packet in packets:
         packet_dict = {}

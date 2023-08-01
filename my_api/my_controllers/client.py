@@ -1,4 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Form, Depends
+
+from dal.client_actions import get_all_devices_by_client_id
+from my_modules.module_authentication import User, get_current_active_user
 
 router = APIRouter()
 
@@ -16,3 +19,11 @@ router = APIRouter()
 #     new_network = {"id": len(networks) + 1, "name": name, "location": location}
 #     networks.append(new_network)
 #     return new_network
+
+@router.get("/all_devices")
+async def all_devices(client_id: int = Form(...), current_user: User = Depends(get_current_active_user)):
+    devices = await get_all_devices_by_client_id(client_id)
+    if devices:
+        return devices
+    return {"sorry": "we can can not find devices for this client"}
+
