@@ -54,6 +54,7 @@ async def general_get_all(my_query):
 
             cursor.execute(my_query)
             all_rows = cursor.fetchall()
+            print(all_rows)
             return all_rows
 
     except Exception as e:
@@ -104,5 +105,8 @@ async def general_delete_data(my_query):
         print(f"Error: {e}")
         return False
 
+
 # asyncio.run(general_delete_data("DELETE FROM device"))
 # print(asyncio.run(general_get_all("SELECT * FROM device")))
+
+# print(asyncio.run(general_get_multi_row_by_condition("SELECT * FROM connection WHERE connection.network_id=%s",11)))
