@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, Depends, Form, Response
+from fastapi import APIRouter, Depends, Form, Response, Path
 
 from dal.devices_connection_actions import get_connections
 from my_modules.connection_visualization import plot_connections
@@ -14,9 +14,8 @@ logger = my_logger.get_logger()
 
 # get the connections of the devices (still MTH)
 @router.get("/network_mapping")
-async def network_mapping(network_id: int = Form(...), current_user: User = Depends(get_current_active_user)):
-    print("network_id", network_id)
-    print("current_user", current_user["user_name"])
+async def network_mapping(network_id: int = Form(...),
+                          current_user: User = Depends(get_current_active_user)):
     connections = await get_connections(network_id)
     if connections:
         return connections
@@ -25,11 +24,21 @@ async def network_mapping(network_id: int = Form(...), current_user: User = Depe
     return {"sorry": msg}
 
 
-@router.get("/network-mapping-visualization")
-async def network_mapping_visualization(network_id: int = Form(...),
-                                        current_user: User = Depends(get_current_active_user)):
+@router.get("/network-mapping-visualization/{network_id}")
+# TODO : with authentication
+# current_user: User = Depends(get_current_active_user)
+async def network_mapping_visualization(network_id: int = Path(...)):
     connections = await get_connections(network_id)
     if connections:
         buffer = await plot_connections(connections)
-        buffer.seek(0)
-        return Response(content=buffer, media_type="image/png")
+        response = Response(content=buffer.getvalue(), media_type="image/png")
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = 'O'
+        return response
+    msg = f"no connections found for {network_id}"
+    logger.info(msg)
+    return {"sorry": msg}
+
+
+

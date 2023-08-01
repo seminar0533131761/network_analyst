@@ -12,7 +12,6 @@ async def device_insert_many(lst_of_dicts, network_id):
     print("got to device insert")
     query = "INSERT IGNORE INTO device (id, device_type, vendor, network_id, ip_address) VALUES (%s, %s, %s, %s, %s)"
     devices_lst_of_tuples = []
-    print("lst_of_dicts", lst_of_dicts[:2])
     for connection in lst_of_dicts:
         devices_lst_of_tuples.append((connection["source_mac"], "no device type ", connection["source_vendor"]
                                       , network_id, connection["source_ip"]))

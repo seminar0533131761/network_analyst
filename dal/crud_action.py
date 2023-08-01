@@ -1,24 +1,29 @@
-from dal.connection import connectionObject
+import logging
+
+from my_modules.self_logging import MyLogger
+from sql_scheme.connection import connectionObject
+
+my_logger = MyLogger(log_level=logging.INFO)
+logger = my_logger.get_logger()
 
 
-# general comment commit is extremely important because it save the changes to the db
+# general comment -commit is extremely important because it save the changes to the db
+
 # TODO : handle connect.close (meanwhile it is close because it cause many problems)
+
 # insert one row
 async def general_insert(my_query, *args):
-    print(args)
     try:
         with connectionObject.cursor() as cursor:
-            print("args in general insert :", args)
             values = args
             cursor.execute(
                 my_query, values)
             connectionObject.commit()
             res = cursor.lastrowid
-            print("res in general", res)
             return res
     except Exception as e:
         # TODO: replace with log instead
-        print(e)
+        logger.error(f"error in inserting one row on {my_query} and {args} ")
         connectionObject.rollback()
         return False
     # finally:
@@ -28,18 +33,15 @@ async def general_insert(my_query, *args):
 
 # insert multi rows
 async def general_insert_many(my_query, lst_of_tuples):
-    print("general insert first")
     try:
-        print("got to general insert many ", lst_of_tuples[:2])
         with connectionObject.cursor() as cursor:
             _id = cursor.executemany(my_query, lst_of_tuples)
-            print("last_id", _id)
         connectionObject.commit()
         print("Multiple rows inserted successfully.")
         return True
     except Exception as e:
         connectionObject.rollback()
-        print(f"Error: {e}")
+        logger.error(f"error in inserting to {my_query} values {lst_of_tuples}")
         return False
 
     # finally:
@@ -49,14 +51,12 @@ async def general_insert_many(my_query, lst_of_tuples):
 async def general_get_all(my_query):
     try:
         with connectionObject.cursor() as cursor:
-
             cursor.execute(my_query)
             all_rows = cursor.fetchall()
-            print(all_rows)
             return all_rows
 
     except Exception as e:
-        print("Error occurred:", e)
+        logger.error(f"error in get all {my_query}")
         return False
     # finally:
     #     connectionObject.close()
@@ -65,8 +65,6 @@ async def general_get_all(my_query):
 async def get_row_by_condition(my_query, condition):
     try:
         with connectionObject.cursor() as cursor:
-            print("query: ", my_query)
-            print("condition: ", condition)
             # case multi conditions
             if not isinstance(condition, int):
                 if len(condition) > 1:
@@ -74,10 +72,9 @@ async def get_row_by_condition(my_query, condition):
             else:
                 cursor.execute(my_query, (condition,))
             data = cursor.fetchone()
-            print("data: ", data)
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
     except Exception as e:
-        print("Error occurred:", e)
+        logger.error(f"error in get a row by condition {my_query}")
         return False
     # finally:
     #     connectionObject.close()
@@ -94,6 +91,7 @@ async def general_get_multi_row_by_condition(my_query, conditions):
             data = cursor.fetchall()
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
     except Exception as e:
+        logger.error(f"error in get multi rows by condition {conditions} and the query {my_query}")
         print("Error occurred:", e)
         return False
     # finally:
@@ -109,7 +107,7 @@ async def general_delete_data(my_query):
         return True
     except Exception as e:
         connectionObject.rollback()
-        print(f"Error: {e}")
+        logger.error(f"error in delete data from {my_query}")
         return False
 
 # asyncio.run(general_delete_data("DELETE FROM device"))
