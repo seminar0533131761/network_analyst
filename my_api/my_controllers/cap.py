@@ -1,11 +1,16 @@
+import logging
+
 from fastapi import APIRouter, UploadFile, File, Form, Depends, Response
 
 from dal.client_actions import is_client_connect_to_user
 from dal.user_actions import get_by_user_name
 from my_modules.handle_pcap import handle_file
 from my_modules.module_authentication import User, get_current_active_user
+from self_logging import MyLogger
 
 router = APIRouter()
+my_logger = MyLogger(log_level=logging.INFO)
+logger = my_logger.get_logger()
 
 
 # only pcap files are expected otherwise many errors can be occurred
@@ -23,4 +28,5 @@ async def upload_pcap(file: UploadFile = File(...), client_id: int = Form(...), 
     is_file_processed_successfully = await handle_file(file_content, network_info)
     if is_file_processed_successfully:
         return {file.filename: "uploaded successfully"}
+    logger.warning("client send a file but it could not be uploaded")
     return {"sorry": "but the file could not be uploaded"}
