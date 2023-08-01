@@ -83,7 +83,10 @@ async def get_row_by_condition(my_query, condition):
 async def general_get_multi_row_by_condition(my_query, conditions):
     try:
         with connectionObject.cursor() as cursor:
-            cursor.execute(my_query, (*conditions,))
+            if len(conditions) > 1:
+                cursor.execute(my_query, (*conditions,))
+            else:
+                cursor.execute(my_query, (conditions,))
             data = cursor.fetchall()
             return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
     except Exception as e:

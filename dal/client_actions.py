@@ -27,6 +27,6 @@ async def client_insert(_id, name):
     return await general_insert(query, _id, name)
 
 
-# asyncio.run(client_insert("1761", "baruch"))
+asyncio.run(client_insert("0987", "sara"))
 # print(asyncio.run(get_all_networks(1761)))
 # print(asyncio.run(get_all_devices_by_client_id(1761)))

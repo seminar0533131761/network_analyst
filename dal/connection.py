@@ -1,12 +1,12 @@
 import pymysql.cursors
 
-dbServerName = "sql6.freesqldatabase.com"
+dbServerName = "sql7.freesqldatabase.com"
 
-dbUser = "sql6635065"
+dbUser = "sql7636747"
 
-dbPassword = "6laeqv8dZC"
+dbPassword = "nFdqlclL9B"
 
-dbName = "sql6635065"
+dbName = "sql7636747"
 
 charSet = "utf8mb4"
 

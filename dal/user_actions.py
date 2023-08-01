@@ -22,8 +22,8 @@ async def get_by_user_name(user_name):
     return await get_row_by_condition(query, user_name)
 
 # res = asyncio.run(insert("INSERT INTO user (user_name, hashed_password, phone, email) VALUES (%s, %s, %s, %s)",
-#                          "sari", "$2b$12$z1PzAnFm2jrOgTh9JRSaeeaSsFyqvTSOsET24aKkS0IAUStfkcu.C",
-#                          "0533131761", "chani@gmail.com"))
+#                          "sari", "$2b$12$ethrNO82tOX32ZSK1jf5guiFTU46OVX.uCtfB2dSQN9Kgl5Upouui",
+#                          "050", "sari@gmail.com"))
 # # print(res)
 # print(asyncio.run(general_get_all("SELECT * from user")))
 # print(asyncio.run(get_by_user_name("bat")))
