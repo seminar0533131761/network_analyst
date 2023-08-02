@@ -1,4 +1,3 @@
-import asyncio
 
 from dal.crud_action import general_insert, general_get_all, get_row_by_condition
 

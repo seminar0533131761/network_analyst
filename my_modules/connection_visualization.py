@@ -14,7 +14,6 @@ async def plot_connections(mac_data):
 
     # Add edges to the graph
     for mac_address, data in mac_data.items():
-        print("data",data,mac_address)
         for connected_mac in data["devices"]:
             G.add_edge(mac_address, connected_mac)
 

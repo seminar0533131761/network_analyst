@@ -68,8 +68,7 @@ async def get_row_by_condition(my_query, condition):
     except Exception as e:
         logger.error(f"error in get a row by condition {my_query}")
         return False
-    # finally:
-    #     connectionObject.close()
+
 
 
 async def general_get_multi_row_by_condition(my_query, conditions):
@@ -86,8 +85,6 @@ async def general_get_multi_row_by_condition(my_query, conditions):
         logger.error(f"error in get multi rows by condition {conditions} and the query {my_query}")
         print("Error occurred:", e)
         return False
-    # finally:
-    #     connectionObject.close()
 
 
 async def general_delete_data(my_query):
@@ -101,8 +98,3 @@ async def general_delete_data(my_query):
         connectionObject.rollback()
         logger.error(f"error in delete data from {my_query}")
         return False
-
-# asyncio.run(general_delete_data("DELETE FROM device"))
-# print(asyncio.run(general_get_all("SELECT * FROM device")))
-
-# print(asyncio.run(general_get_multi_row_by_condition("SELECT * FROM connection WHERE connection.network_id=%s",11)))
