@@ -16,9 +16,7 @@ logger = my_logger.get_logger()
 
 @router.post("/login", response_model=object)
 async def login_for_access_token(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
-    print("form_data.username: ", form_data.username)
     user = await module_authentication.authenticate_user(form_data.username, form_data.password)
-    print("user: ", user)
     if not user:
         logger.info(f"UNAUTHORIZED user with username {form_data.username}")
         raise HTTPException(

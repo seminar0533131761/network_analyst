@@ -41,16 +41,11 @@ async def get_connections(network_id):
 # the purpose is to add to each device the vendor
 async def add_vendor(dict_of_connection_map, lst_of_devices):
     for mac in dict_of_connection_map.keys():
-        print("mac", mac)
         for device in lst_of_devices:
-            print("device", device)
             if device["id"] == mac:
-                print("vendor", device["vendor"])
                 # as explained in the former function I have dict with keys each key represent
                 # mac address and the value is dict which has devices=lst of devices communicated with this devices
                 # from the former function and adding new field vendor
                 dict_of_connection_map[mac]["vendor"] = device["vendor"]
     return dict_of_connection_map
 
-# asyncio.run(general_delete_data("DELETE FROM connection"))
-# print(asyncio.run(general_get_all("SELECT * FROM connection")))

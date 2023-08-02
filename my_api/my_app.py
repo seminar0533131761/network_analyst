@@ -2,6 +2,9 @@ import logging
 import os
 import sys
 
+# this because I want the interrupter to start searching from network_analyst
+# and not just from my_api (in the last case many files would not be found
+# because it is only going down not up
 curr_path = os.path.dirname(__file__)
 root_path = os.path.join(curr_path, "..")
 sys.path.append(root_path)
@@ -13,7 +16,6 @@ from my_controllers.cap import router as cap_router
 from my_controllers.client import router as client_router
 from my_controllers.connection import router as connection_router
 from my_controllers.network import router as network_router
-from my_controllers.user import router as user_router
 from my_modules.self_logging import MyLogger
 
 # to make sys search from network_analyst not from my_api
@@ -22,7 +24,6 @@ from my_modules.self_logging import MyLogger
 app = FastAPI()
 
 # gather all routes
-app.include_router(user_router, prefix="/users", tags=["users"])
 app.include_router(network_router, prefix="/networks", tags=["networks"])
 app.include_router(client_router, prefix="/clients", tags=["clients"])
 app.include_router(cap_router, prefix="/caps", tags=["caps"])

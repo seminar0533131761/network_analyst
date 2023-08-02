@@ -12,7 +12,6 @@ async def device_insert_many(lst_of_dicts, network_id):
     print("got to device insert")
     query = "INSERT IGNORE INTO device (id, device_type, vendor, network_id, ip_address) VALUES (%s, %s, %s, %s, %s)"
     devices_lst_of_tuples = []
-    print("lst_of_dicts", lst_of_dicts[:2])
     for connection in lst_of_dicts:
         devices_lst_of_tuples.append((connection["source_mac"], "no device type ", connection["source_vendor"]
                                       , network_id, connection["source_ip"]))
@@ -27,5 +26,5 @@ async def get_all_network_devices_by_protocol_type(network_id, protocol_type):
     query = "SELECT device.id , device.ip_address, connection.protocol_type from device INNER JOIN connection on device.network_id = %s AND connection.protocol_type = %s "
     return await general_get_multi_row_by_condition(query,(network_id,protocol_type))
 
-# print(asyncio.run(get_all_network_devices_by_protocol_type(28,"ARP")))
+
 
