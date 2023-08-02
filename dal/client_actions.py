@@ -27,7 +27,3 @@ async def client_insert(_id, name):
 async def is_client_connect_to_user(client_id, user_id):
     query = "SELECT * FROM client_user WHERE client_id=%s AND user_id=%s"
     return await get_row_by_condition(query, (client_id, user_id))
-# asyncio.run(client_insert("1761", "baruch"))
-# print(asyncio.run(get_all_networks(1761)))
-# print(asyncio.run(get_all_devices_by_client_id(1761)))
-# print(asyncio.run(general_get_all("SELECT * FROM client")))

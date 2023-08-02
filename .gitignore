@@ -1,1 +1,14 @@
 .idea
+.idea/
+__pycache__/
+dal/__pycache__/
+sql_scheme/__pycache__/
+my_api/__pycache__/
+my_modules/__pycache__/
+my_api/my_controllers/__pycache__/
+__pycache__
+dal/__pycache__
+sql_scheme/__pycache__
+my_api/__pycache__
+my_modules/__pycache__
+my_api/my_controllers/__pycache__

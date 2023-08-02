@@ -1,4 +1,4 @@
-import asyncio
+
 
 from dal.crud_action import general_insert, general_insert_many, general_get_multi_row_by_condition
 
@@ -79,6 +79,7 @@ async def get_connections(network_id):
                 dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]]["protocol_type"].add(item["protocol_type"])
 
         else:
+<<<<<<< HEAD
             dict_of_connection_map[item["src_id"]] = {
                 "devices": {
                     item["dest_id"]: {
@@ -96,3 +97,21 @@ async def get_connections(network_id):
 
 
 # asyncio.run(get_connections_for_visualization(12))
+=======
+            dict_of_connection_map[item["src_id"]] = {"devices": []}
+            dict_of_connection_map[item["src_id"]]["devices"].append(item["dest_id"])
+    return await add_vendor(dict_of_connection_map, lst_of_devices)
+
+
+# the purpose is to add to each device the vendor
+async def add_vendor(dict_of_connection_map, lst_of_devices):
+    for mac in dict_of_connection_map.keys():
+        for device in lst_of_devices:
+            if device["id"] == mac:
+                # as explained in the former function I have dict with keys each key represent
+                # mac address and the value is dict which has devices=lst of devices communicated with this devices
+                # from the former function and adding new field vendor
+                dict_of_connection_map[mac]["vendor"] = device["vendor"]
+    return dict_of_connection_map
+
+>>>>>>> origin/main

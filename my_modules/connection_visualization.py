@@ -66,11 +66,16 @@ async def plot_connections(mac_data):
         G.add_node(mac_address, mac_address=mac_address)
     # Add edges to the graph
     for mac_address, data in mac_data.items():
+<<<<<<< HEAD
         print("mac", mac_address, "data", data)
         for connected_mac, connection_info in data["devices"].items():
             protocol_types = connection_info["protocol_type"]
             edge_label = ", ".join(protocol_types)
             G.add_edge(mac_address, connected_mac, label=edge_label)
+=======
+        for connected_mac in data["devices"]:
+            G.add_edge(mac_address, connected_mac)
+>>>>>>> origin/main
 
     # Create the plot
     plt.figure(figsize=(12, 8))

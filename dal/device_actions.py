@@ -1,4 +1,3 @@
-import asyncio
 
 from dal.crud_action import general_insert, general_insert_many, general_get_multi_row_by_condition
 
@@ -26,5 +25,5 @@ async def get_all_network_devices_by_protocol_type(network_id, protocol_type):
     query = "SELECT device.id , device.ip_address, connection.protocol_type from device INNER JOIN connection on device.network_id = %s AND connection.protocol_type = %s "
     return await general_get_multi_row_by_condition(query,(network_id,protocol_type))
 
-# print(asyncio.run(get_all_network_devices_by_protocol_type(28,"ARP")))
+
 
