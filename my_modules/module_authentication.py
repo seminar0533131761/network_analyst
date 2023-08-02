@@ -91,14 +91,10 @@ async def get_user(username: str):
 
 async def authenticate_user(username: str, password: str):
     user: UserInDB = await get_user(username)
-    print("authenticate_user - user: ", user)
     if not user:
         return None
-    print("password: ", password)
     if not verify_password(password, user['hashed_password']):
-        print("got to verify password")
         return None
-    print("verify_password success!!!!!!")
     return user
 
 
@@ -114,7 +110,6 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
 
 
 async def get_current_user(token: str = Depends(oauth2_cookie_scheme)):
-    print("got to cur user")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -123,7 +118,6 @@ async def get_current_user(token: str = Depends(oauth2_cookie_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
-        print(username)
         if username is None:
             raise credentials_exception
         token_data = TokenData(username=username)
@@ -132,13 +126,10 @@ async def get_current_user(token: str = Depends(oauth2_cookie_scheme)):
     user = await get_user(username=token_data.username)
     if user is None:
         raise credentials_exception
-    print(user)
     return user
 
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)):
-    print("active user", current_user)
     if not current_user:
         raise HTTPException(status_code=400, detail="Inactive user")
-    print("current user ", current_user)
     return current_user

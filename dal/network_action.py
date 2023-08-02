@@ -5,7 +5,6 @@ from dal.crud_action import general_get_multi_row_by_condition, general_insert, 
 
 async def network_insert(subnet_mask, client_id, location):
     query = "INSERT INTO network (subnet_musk, client_id, location) VALUES (%s, %s, %s)"
-    print("in network :", client_id, location)
     return await general_insert(query, subnet_mask, client_id, location)
 
 
@@ -25,5 +24,5 @@ async def get_all():
     return await general_get_all(query)
 
 # asyncio.run(network_delete("DELETE FROM network"))
-print(asyncio.run(general_get_all("SELECT * FROM network")))
+# print(asyncio.run(general_get_all("SELECT * FROM network")))
 # asyncio.run(get_all())

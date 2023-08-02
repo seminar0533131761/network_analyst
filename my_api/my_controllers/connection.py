@@ -25,12 +25,12 @@ async def network_mapping(network_id: int = Form(...),
 
 
 @router.get("/network-mapping-visualization/{network_id}")
-# TODO : with authentication
-# current_user: User = Depends(get_current_active_user)
-async def network_mapping_visualization(network_id: int = Path(...)):
+async def network_mapping_visualization(network_id: int = Path(...),current_user: User = Depends(get_current_active_user)):
     connections = await get_connections(network_id)
     if connections:
+        print("before call plot_connections")
         buffer = await plot_connections(connections)
+        print("after call plot_connections")
         response = Response(content=buffer.getvalue(), media_type="image/png")
         response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
         response.headers['Pragma'] = 'no-cache'

@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from my_modules.self_logging import MyLogger
@@ -89,7 +90,7 @@ async def general_get_multi_row_by_condition(my_query, conditions):
             else:
                 cursor.execute(my_query, (conditions,))
             data = cursor.fetchall()
-            return data  # Returns a dictionary representing the user's data, or None if user_name doesn't exist
+            return data
     except Exception as e:
         logger.error(f"error in get multi rows by condition {conditions} and the query {my_query}")
         print("Error occurred:", e)

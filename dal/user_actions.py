@@ -3,7 +3,7 @@ import asyncio
 from dal.crud_action import general_insert, general_get_all, get_row_by_condition
 
 
-# TODO decorator for errors and for logging's
+# TODO: decorator for errors and for logging's
 
 async def insert(query, user_name, hashed_password, phone, email):
     return await general_insert(query, user_name, hashed_password, phone, email)
@@ -16,7 +16,6 @@ async def get_all():
 
 
 async def get_by_user_name(user_name):
-    print("user_name: ", user_name)
     query = "SELECT * FROM user WHERE user_name = %s"
     return await get_row_by_condition(query, user_name)
 
