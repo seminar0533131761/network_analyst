@@ -10,7 +10,9 @@ url = "http://127.0.0.1:8000/caps/upload"
 def choose_file(url):
     file_path = filedialog.askopenfilename(initialdir="/", title="Select a File",
                                            filetypes=(("Capture Files", "*.pcap"), ("All Files", "*.*")))
-    # change to all types file
+    file_path = filedialog.askopenfilename(initialdir="/", title="Select a File",
+                                           filetypes=(("Capture Files", "*.pcap;*.cap;*.pcapng"), ("All Files", "*.*")))
+
     if file_path:
         upload_file(url, file_path)
 
@@ -19,13 +21,9 @@ def upload_file(url, file_path):
     try:
         with open(file_path, 'rb') as f:
             files = {'file': (file_path, f, 'application/octet-stream')}
-            print(files)
             response = requests.post(url, files=files)
         if response.status_code == 200:
-            print("File uploaded successfully.")
             return response.json()
-        else:
-            print("Failed to upload the file. Response status code:", response.status_code)
 
     except Exception as e:
         print("Error occurred while uploading the file:", e)

@@ -26,9 +26,6 @@ async def general_insert(my_query, *args):
         logger.error(f"error in inserting one row on {my_query} and {args} ")
         connectionObject.rollback()
         return False
-    # finally:
-    #     print("finish")
-    #     connectionObject.close()
 
 
 # insert multi rows
@@ -44,9 +41,6 @@ async def general_insert_many(my_query, lst_of_tuples):
         logger.error(f"error in inserting to {my_query} values {lst_of_tuples}")
         return False
 
-    # finally:
-    #     connectionObject.close()
-
 
 async def general_get_all(my_query):
     try:
@@ -58,12 +52,10 @@ async def general_get_all(my_query):
     except Exception as e:
         logger.error(f"error in get all {my_query}")
         return False
-    # finally:
-    #     connectionObject.close()
-
 
 async def get_row_by_condition(my_query, condition):
     try:
+
         with connectionObject.cursor() as cursor:
             # case multi conditions
             if not isinstance(condition, int):
