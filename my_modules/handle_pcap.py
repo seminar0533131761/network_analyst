@@ -1,11 +1,11 @@
 from dal.device_actions import device_insert_many
 from dal.devices_connection_actions import connection_insert_many
 from dal.network_action import network_insert
-from my_modules.parse_pcap import convert_context_to_lst_of_dicts
+from my_modules.parse_pcap import convert_pcap_to_lst_of_dicts
 
 
 async def handle_file(file_content, network_info):
-    data_lst_of_dicts = await convert_context_to_lst_of_dicts(file_content)
+    data_lst_of_dicts = await convert_pcap_to_lst_of_dicts(file_content)
     return await update_db(data_lst_of_dicts, network_info)
 
 

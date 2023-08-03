@@ -1,5 +1,3 @@
-
-
 from dal.crud_action import general_insert, general_insert_many, general_get_multi_row_by_condition
 
 
@@ -69,22 +67,23 @@ async def get_connections(network_id):
     for item in lst_of_connections:
         if item["src_id"] in dict_of_connection_map:
             if item["dest_id"] in dict_of_connection_map[item["src_id"]]["devices"].keys():
-                dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]]["protocol_type"].add(item["protocol_type"])
+                dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]]["protocol_type"].add(
+                    item["protocol_type"])
             else:
-                dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]]= {
+                dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]] = {
                     "protocol_type": set(),
-                    "ip_address": item["ip_address"],
+                    "dest_ip_address": item["ip_address"],
                     "vendor": item["vendor"]
                 }
-                dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]]["protocol_type"].add(item["protocol_type"])
+                dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]]["protocol_type"].add(
+                    item["protocol_type"])
 
         else:
-<<<<<<< HEAD
             dict_of_connection_map[item["src_id"]] = {
                 "devices": {
                     item["dest_id"]: {
                         "protocol_type": set(),
-                        "ip_address": item["ip_address"],
+                        "dest_ip_address": item["ip_address"],
                         "vendor": item["vendor"]
                     }
                 }
@@ -92,15 +91,6 @@ async def get_connections(network_id):
             dict_of_connection_map[item["src_id"]]["devices"][item["dest_id"]]["protocol_type"].add(
                 item["protocol_type"])
     return dict_of_connection_map
-
-
-
-
-# asyncio.run(get_connections_for_visualization(12))
-=======
-            dict_of_connection_map[item["src_id"]] = {"devices": []}
-            dict_of_connection_map[item["src_id"]]["devices"].append(item["dest_id"])
-    return await add_vendor(dict_of_connection_map, lst_of_devices)
 
 
 # the purpose is to add to each device the vendor
@@ -114,4 +104,3 @@ async def add_vendor(dict_of_connection_map, lst_of_devices):
                 dict_of_connection_map[mac]["vendor"] = device["vendor"]
     return dict_of_connection_map
 
->>>>>>> origin/main

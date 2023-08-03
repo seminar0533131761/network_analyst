@@ -20,10 +20,7 @@ async def get_all():
     query = "SELECT * FROM network"
     return await general_get_all(query)
 
-<<<<<<< HEAD
 # asyncio.run(network_delete("DELETE FROM network"))
 # print(asyncio.run(general_get_all("SELECT * FROM network")))
 # asyncio.run(get_all())
-=======
 
->>>>>>> origin/main
